@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +9,111 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f5f2;
             color: #2c2c2c;
+            margin: 0;
+            overflow: hidden;
+            /* Zablokowane przewijanie przy loaderze */
         }
-        .serif { font-family: 'Playfair Display', serif; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .nav-active { color: #c2410c; border-bottom: 2px solid #c2410c; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .gradient-header { background: linear-gradient(135deg, #1e3a8a 0%, #c2410c 100%); }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .nav-active {
+            color: #c2410c;
+            border-bottom: 2px solid #c2410c;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #c2410c 100%);
+        }
+
+        /* Loader Styles */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, #1e3a8a 0%, #c2410c 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .pulse-plane {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 280px;
+        }
     </style>
 </head>
+
 <body class="pb-20">
+
+    <!-- LOADER / COUNTDOWN -->
+    <div id="loader">
+        <div class="mb-8 text-center px-4">
+            <i class="fas fa-plane-departure text-5xl mb-6 pulse-plane"></i>
+            <h2 class="serif text-2xl font-bold mb-2">Do wylotu pozostało:</h2>
+            <div id="countdown" class="countdown-box text-xl font-mono tracking-wider">
+                Ładowanie...
+            </div>
+        </div>
+        <button onclick="enterSite()"
+            class="bg-white text-blue-900 px-8 py-3 rounded-full font-bold shadow-xl hover:bg-orange-50 transition-colors uppercase tracking-widest text-sm">
+            Otwórz stronę
+        </button>
+    </div>
 
     <!-- Header -->
     <header class="gradient-header text-white p-6 shadow-lg">
@@ -36,11 +127,11 @@
 
     <!-- Main Content -->
     <main class="p-4 max-w-2xl mx-auto">
-        
+
         <!-- Tab: Harmonogram -->
         <section id="plan" class="tab-content active space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Twój Plan Podróży</h2>
-            
+
             <!-- Sobota -->
             <div class="card p-5 border-l-4 border-orange-600">
                 <div class="flex justify-between items-start mb-3">
@@ -48,10 +139,14 @@
                     <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded">Autentyczność</span>
                 </div>
                 <ul class="space-y-3 text-sm">
-                    <li><i class="fas fa-coffee mr-2 text-orange-500"></i> <strong>Poranek:</strong> Torrefazione Cannaregio (kawa rzemieślnicza).</li>
-                    <li><i class="fas fa-synagogue mr-2 text-orange-500"></i> <strong>Historia:</strong> Ghetto Veneziano & Grattacieli.</li>
-                    <li><i class="fas fa-paint-brush mr-2 text-orange-500"></i> <strong>Sztuka:</strong> Madonna dell'Orto (Tintoretto).</li>
-                    <li><i class="fas fa-wine-glass mr-2 text-orange-500"></i> <strong>Wieczór:</strong> Cicchetti Tour: Vino Vero & Al Timon.</li>
+                    <li><i class="fas fa-coffee mr-2 text-orange-500"></i> <strong>Poranek:</strong> Torrefazione
+                        Cannaregio (kawa rzemieślnicza).</li>
+                    <li><i class="fas fa-synagogue mr-2 text-orange-500"></i> <strong>Historia:</strong> Ghetto
+                        Veneziano & Grattacieli.</li>
+                    <li><i class="fas fa-paint-brush mr-2 text-orange-500"></i> <strong>Sztuka:</strong> Madonna
+                        dell'Orto (Tintoretto).</li>
+                    <li><i class="fas fa-wine-glass mr-2 text-orange-500"></i> <strong>Wieczór:</strong> Cicchetti Tour:
+                        Vino Vero & Al Timon.</li>
                 </ul>
             </div>
 
@@ -62,10 +157,14 @@
                     <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Duchowość</span>
                 </div>
                 <ul class="space-y-3 text-sm">
-                    <li><i class="fas fa-church mr-2 text-blue-500"></i> <strong>Msza:</strong> San Francesco della Vigna (fasada Palladia).</li>
-                    <li><i class="fas fa-cookie mr-2 text-blue-500"></i> <strong>Słodycze:</strong> Pasticceria Bonifacio (Colomba di Pasqua).</li>
-                    <li><i class="fas fa-anchor mr-2 text-blue-500"></i> <strong>Spacer:</strong> Mury Arsenale i Via Garibaldi.</li>
-                    <li><i class="fas fa-leaf mr-2 text-blue-500"></i> <strong>Relaks:</strong> Giardini della Biennale & Serra dei Giardini.</li>
+                    <li><i class="fas fa-church mr-2 text-blue-500"></i> <strong>Msza:</strong> San Francesco della
+                        Vigna (fasada Palladia).</li>
+                    <li><i class="fas fa-cookie mr-2 text-blue-500"></i> <strong>Słodycze:</strong> Pasticceria
+                        Bonifacio (Colomba di Pasqua).</li>
+                    <li><i class="fas fa-anchor mr-2 text-blue-500"></i> <strong>Spacer:</strong> Mury Arsenale i Via
+                        Garibaldi.</li>
+                    <li><i class="fas fa-leaf mr-2 text-blue-500"></i> <strong>Relaks:</strong> Giardini della Biennale
+                        & Serra dei Giardini.</li>
                 </ul>
             </div>
 
@@ -77,10 +176,14 @@
                 </div>
                 <p class="text-xs italic text-gray-500 mb-2">Tradycyjna "Pasquetta" (ucieczka poza miasto)</p>
                 <ul class="space-y-3 text-sm">
-                    <li><i class="fas fa-ship mr-2 text-green-500"></i> <strong>Torcello:</strong> Katedra z bizantyjskimi mozaikami.</li>
-                    <li><i class="fas fa-wine-bottle mr-2 text-green-500"></i> <strong>Mazzorbo:</strong> Winnica Venissa (szczep Dorona).</li>
-                    <li><i class="fas fa-bicycle mr-2 text-green-500"></i> <strong>Opcja:</strong> Rowerem po Sant'Erasmo (karczochy).</li>
-                    <li><i class="fas fa-utensils mr-2 text-green-500"></i> <strong>Uczta:</strong> Trattoria al Gatto Nero (Burano) - wymagana rezerwacja!</li>
+                    <li><i class="fas fa-ship mr-2 text-green-500"></i> <strong>Torcello:</strong> Katedra z
+                        bizantyjskimi mozaikami.</li>
+                    <li><i class="fas fa-wine-bottle mr-2 text-green-500"></i> <strong>Mazzorbo:</strong> Winnica
+                        Venissa (szczep Dorona).</li>
+                    <li><i class="fas fa-bicycle mr-2 text-green-500"></i> <strong>Opcja:</strong> Rowerem po
+                        Sant'Erasmo (karczochy).</li>
+                    <li><i class="fas fa-utensils mr-2 text-green-500"></i> <strong>Uczta:</strong> Trattoria al Gatto
+                        Nero (Burano) - wymagana rezerwacja!</li>
                 </ul>
             </div>
 
@@ -91,10 +194,14 @@
                     <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">Serce Miasta</span>
                 </div>
                 <ul class="space-y-3 text-sm">
-                    <li><i class="fas fa-store mr-2 text-purple-500"></i> <strong>Rialto:</strong> Targ rybny & Espresso w Al Mercà.</li>
-                    <li><i class="fas fa-landmark mr-2 text-purple-500"></i> <strong>Dorsoduro:</strong> Gallerie dell'Accademia (bez tłumów).</li>
-                    <li><i class="fas fa-tools mr-2 text-purple-500"></i> <strong>Rzemiosło:</strong> Squero di San Trovaso (gondole).</li>
-                    <li><i class="fas fa-sun mr-2 text-purple-500"></i> <strong>Koniec:</strong> Zachód słońca na Fondamenta Zattere.</li>
+                    <li><i class="fas fa-store mr-2 text-purple-500"></i> <strong>Rialto:</strong> Targ rybny & Espresso
+                        w Al Mercà.</li>
+                    <li><i class="fas fa-landmark mr-2 text-purple-500"></i> <strong>Dorsoduro:</strong> Gallerie
+                        dell'Accademia (bez tłumów).</li>
+                    <li><i class="fas fa-tools mr-2 text-purple-500"></i> <strong>Rzemiosło:</strong> Squero di San
+                        Trovaso (gondole).</li>
+                    <li><i class="fas fa-sun mr-2 text-purple-500"></i> <strong>Koniec:</strong> Zachód słońca na
+                        Fondamenta Zattere.</li>
                 </ul>
             </div>
         </section>
@@ -102,8 +209,6 @@
         <!-- Tab: Logistyka -->
         <section id="logistyka" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Informacje Logistyczne</h2>
-            
-            <!-- Loty -->
             <div class="card p-5">
                 <h3 class="font-bold mb-3 text-blue-900"><i class="fas fa-plane-departure mr-2"></i>Loty (Ryanair)</h3>
                 <div class="grid grid-cols-2 gap-4 text-sm">
@@ -120,7 +225,6 @@
                 </div>
             </div>
 
-            <!-- Transport do Mestre -->
             <div class="card p-5">
                 <h3 class="font-bold mb-3 text-red-900"><i class="fas fa-bus mr-2"></i>Mestre ↔ Wenecja</h3>
                 <div class="space-y-2 text-sm">
@@ -132,96 +236,176 @@
                         <span>Autobus (Linia 2, 7, L4)</span>
                         <span class="font-bold">15-20 min</span>
                     </div>
-                    <div class="flex justify-between items-center text-blue-600 font-semibold">
+                    <div class="flex justify-between items-center text-blue-600 font-semibold border-b pb-1">
                         <span>Linie Nocne (N1, N2)</span>
                         <span>Całą noc co 30'</span>
                     </div>
                 </div>
+
+                <!-- Przycisk biletów online -->
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-3">Kup bilety online</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="https://www.veneziaunica.it/en/e-commerce/services" target="_blank"
+                            class="bg-red-50 text-red-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-red-100 flex items-center justify-center gap-2">
+                            <i class="fas fa-shopping-cart"></i> Venezia Unica
+                        </a>
+                        <a href="https://actv.avmspa.it/en/content/avm-venezia-official-app" target="_blank"
+                            class="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-blue-100 flex items-center justify-center gap-2">
+                            <i class="fas fa-mobile-alt"></i> App AVM
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Bilety Wielkanocne -->
             <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-sm">
                 <p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Wielkanoc (5-6.04):</p>
-                <p>Rozkład świąteczny ACTV. Kup bilet wielodniowy, aby oszczędzić. <strong>Pamiętaj o walidacji biletów!</strong></p>
+                <p>Rozkład świąteczny ACTV. Kup bilet wielodniowy, aby oszczędzić. <strong>Pamiętaj o walidacji
+                        biletów!</strong></p>
             </div>
         </section>
 
         <!-- Tab: Menu -->
         <section id="kuchnia" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Smaki Wenecji</h2>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <div class="card p-4 flex items-center gap-4">
+
+            <!-- Tradycyjne Dania Główne -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
                     <div class="text-3xl">🐟</div>
                     <div>
                         <h4 class="font-bold">Sarde in saor</h4>
-                        <p class="text-xs text-gray-600">Sardynki w słodko-kwaśnej marynacie (klasyka przystawek).</p>
+                        <p class="text-xs text-gray-600">Sardynki w słodko-kwaśnej marynacie z cebulą i rodzynkami.</p>
                     </div>
                 </div>
-                <div class="card p-4 flex items-center gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
                     <div class="text-3xl">🧆</div>
                     <div>
                         <h4 class="font-bold">Baccalà mantecato</h4>
-                        <p class="text-xs text-gray-600">Kremowy mus z dorsza podawany na polencie.</p>
+                        <p class="text-xs text-gray-600">Kremowy mus z dorsza podawany na chrupiącej polencie.</p>
                     </div>
                 </div>
-                <div class="card p-4 flex items-center gap-4">
-                    <div class="text-3xl">🕊️</div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
+                    <div class="text-3xl">🥯</div>
                     <div>
-                        <h4 class="font-bold">Colomba di Pasqua</h4>
-                        <p class="text-xs text-gray-600">Tradycyjne ciasto wielkanocne w kształcie gołębicy.</p>
+                        <h4 class="font-bold">Fritole Veneziane</h4>
+                        <p class="text-xs text-gray-600">Słodkie pączki z orzeszkami pinii i rodzynkami (tradycja!).</p>
                     </div>
                 </div>
-                <div class="card p-4 flex items-center gap-4">
-                    <div class="text-3xl">🥦</div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
+                    <div class="text-3xl">🍚</div>
                     <div>
-                        <h4 class="font-bold">Castraure</h4>
-                        <p class="text-xs text-gray-600">Młode, fioletowe karczochy z Sant'Erasmo (dostępne w kwietniu!).</p>
+                        <h4 class="font-bold">Risi e Bisi</h4>
+                        <p class="text-xs text-gray-600">Gęsta zupa/risotto z ryżem i młodym groszkiem (danie królów).
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <h3 class="serif text-xl font-bold mt-6">Polecane Bacari</h3>
-            <div class="space-y-3">
-                <div class="bg-white p-3 rounded-lg shadow-sm border border-orange-100">
-                    <span class="font-semibold">Vino Vero (Cannaregio)</span> - Wina naturalne.
+            <!-- Nowa sekcja: Pasty i Pizze -->
+            <h3 class="serif text-xl font-bold mt-6 mb-2 text-red-800">Pasta & Pizza</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🍝</div>
+                    <div>
+                        <h4 class="font-bold">Bigoli in salsa</h4>
+                        <p class="text-xs text-gray-600">Gruby wenecki makaron w sosie z cebuli i solonych sardeli.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-3 rounded-lg shadow-sm border border-orange-100">
-                    <span class="font-semibold">All'Arco (San Polo)</span> - Najświeższe cicchetti przy targu.
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🦑</div>
+                    <div>
+                        <h4 class="font-bold">Spaghetti al nero</h4>
+                        <p class="text-xs text-gray-600">Makaron z mątwą i jej atramentem. Głęboki, morski smak.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-3 rounded-lg shadow-sm border border-orange-100">
-                    <span class="font-semibold">Cantinone Già Schiavi (Dorsoduro)</span> - Kultowe pasty na chlebie.
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🍕</div>
+                    <div>
+                        <h4 class="font-bold">Pizza „Al Taglio”</h4>
+                        <p class="text-xs text-gray-600">W Wenecji szukaj pizzy na kawałki w małych piekarniach (forno).
+                        </p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🥟</div>
+                    <div>
+                        <h4 class="font-bold">Gnocchi di Pasqua</h4>
+                        <p class="text-xs text-gray-600">Lokalna wariacja gnocchi, często serwowana w okresie
+                            świątecznym.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pozostałe klasyki -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-gray-100">
+                    <div class="text-3xl">🥘</div>
+                    <div>
+                        <h4 class="font-bold">Fegato alla Veneziana</h4>
+                        <p class="text-xs text-gray-600">Wątróbka cielęca duszona z dużą ilością cebuli.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Tab: Pomocnik -->
         <section id="pomocnik" class="tab-content space-y-6">
-            <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Przydatne Zwroty & Mapy</h2>
-            
+            <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Pomoc & Mapy</h2>
+
             <div class="card p-5">
-                <h3 class="font-bold mb-3">Słowniczek Cicchetti</h3>
-                <div class="space-y-2 text-sm">
-                    <p><strong>Un'ombra:</strong> Mały kieliszek domowego wina (zwykle 1-1.5€).</p>
-                    <p><strong>Giro d'ombra:</strong> Odpowiednik "pub crawl", spacer od baru do baru.</p>
-                    <p><strong>Cicchetti:</strong> Weneckie tapas (przekąski).</p>
-                    <p><strong>Traghetto:</strong> Gondola-prom za 2€ przez Canal Grande.</p>
+                <h3 class="font-bold mb-3 text-orange-800"><i class="fas fa-language mr-2"></i>Słowniczek Codzienny</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <div class="border-b border-gray-100 pb-1">Dzień dobry</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Buongiorno</div>
+                    <div class="border-b border-gray-100 pb-1">Dobry wieczór</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Buonasera</div>
+                    <div class="border-b border-gray-100 pb-1">Dziękuję</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Grazie</div>
+                    <div class="border-b border-gray-100 pb-1">Do widzenia</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Arrivederci</div>
+                    <div class="border-b border-gray-100 pb-1">Przepraszam</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Mi scusi / Scusa</div>
+                    <div class="border-b border-gray-100 pb-1">Proszę (podać coś)</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Prego</div>
+                    <div class="border-b border-gray-100 pb-1">Ile kosztuje?</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Quanto costa?</div>
+                    <div>Rachunek, proszę</div>
+                    <div class="italic font-semibold">Il conto, per favore</div>
                 </div>
             </div>
 
-            <div class="card p-5">
-                <h3 class="font-bold mb-3">Ważne Kontakty</h3>
-                <div class="space-y-2 text-sm">
-                    <p><strong>Hapton House (Via Trento 19):</strong> <a href="tel:+39042406676" class="text-blue-600 underline">+39 0424 06676</a></p>
-                    <p><strong>Pogotowie (EU):</strong> 112</p>
-                    <p><strong>Taxi Mestre:</strong> 041 5964</p>
+            <!-- Nowa sekcja: Nocleg i Kontakt -->
+            <div class="card p-5 border-l-4 border-blue-900">
+                <h3 class="font-bold mb-3 text-blue-900"><i class="fas fa-home mr-2"></i>Nocleg i Kontakt</h3>
+                <div class="text-sm space-y-2">
+                    <p class="font-bold">Hapton house Trento 19.1</p>
+                    <p class="text-gray-600"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>Via Trento, 19,
+                        Mestre</p>
+                    <p class="text-gray-600"><i class="fas fa-phone mr-2 text-green-600"></i><a
+                            href="tel:+39042406676">+39 0424 06676</a></p>
                 </div>
             </div>
 
-            <div class="bg-blue-900 text-white p-6 rounded-xl text-center">
-                <i class="fas fa-map-marked-alt text-4xl mb-3"></i>
-                <h3 class="font-bold text-xl mb-2">Pamiętaj!</h3>
-                <p class="text-sm opacity-80 italic">"Zgubienie się w Wenecji to jedyny sposób, by naprawdę ją zobaczyć."</p>
+            <!-- Interaktywna Mapa -->
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Trento+19+Venice+Italy" target="_blank"
+                class="block transition-transform active:scale-95">
+                <div
+                    class="bg-blue-900 text-white p-6 rounded-xl text-center shadow-lg hover:bg-blue-800 transition-colors">
+                    <i class="fas fa-map-marked-alt text-4xl mb-3"></i>
+                    <h3 class="font-bold text-xl mb-2">Pamiętaj!</h3>
+                    <p class="text-sm opacity-80 italic mb-4">"Zgubienie się w Wenecji to jedyny sposób, by naprawdę ją
+                        zobaczyć."</p>
+                    <div
+                        class="bg-white/10 py-2 px-4 rounded-full inline-flex items-center gap-2 border border-white/20 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fas fa-external-link-alt text-xs"></i>
+                        Kliknij, aby otworzyć mapę
+                    </div>
+                </div>
+            </a>
+
+            <div class="text-center p-4">
+                <p class="text-xs text-gray-400">Numer alarmowy we Włoszech: <strong>112</strong></p>
             </div>
         </section>
 
@@ -248,28 +432,54 @@
     </nav>
 
     <script>
+        // TARGET DATE: 3.04.2026, 13:10
+        const targetDate = new Date("April 3, 2026 13:10:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "PRZYGODA ROZPOCZĘTA!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // Run countdown every second
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function enterSite() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('loader-hidden');
+            document.body.style.overflow = 'auto'; // Przywrócenie skrolowania
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 600);
+        }
+
         function showTab(tabId, el) {
-            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
-            // Show active tab
             document.getElementById(tabId).classList.add('active');
-            
-            // Reset nav icons
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.classList.remove('nav-active');
                 btn.classList.add('text-gray-400');
             });
-            
-            // Set active nav icon
             el.classList.add('nav-active');
             el.classList.remove('text-gray-400');
-            
-            // Scroll to top
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
+
 </html>
