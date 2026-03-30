@@ -1,28 +1,52 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wenecja 2026 | Slow Travel</title>
+    <title>Wenecja 2026 | RG Travel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap');
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f5f2;
             color: #2c2c2c;
             margin: 0;
-            overflow: hidden; 
+            overflow: hidden;
+            /* Zablokowane przewijanie przy loaderze */
         }
-        .serif { font-family: 'Playfair Display', serif; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .nav-active { color: #c2410c; border-bottom: 2px solid #c2410c; }
-        .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .gradient-header { background: linear-gradient(135deg, #1e3a8a 0%, #c2410c 100%); }
 
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .nav-active {
+            color: #c2410c;
+            border-bottom: 2px solid #c2410c;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #c2410c 100%);
+        }
+
+        /* Loader Styles */
         #loader {
             position: fixed;
             inset: 0;
@@ -46,9 +70,20 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.2); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .countdown-box {
@@ -60,10 +95,21 @@
             text-align: center;
             min-width: 280px;
         }
+
+        .attraction-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid #f3f4f6;
+        }
     </style>
 </head>
+
 <body class="pb-20">
 
+    <!-- LOADER / COUNTDOWN -->
     <div id="loader">
         <div class="mb-8 text-center px-4">
             <i class="fas fa-plane-departure text-5xl mb-6 pulse-plane"></i>
@@ -72,15 +118,20 @@
                 Ładowanie...
             </div>
         </div>
-        <button onclick="enterSite()" class="bg-white text-blue-900 px-8 py-3 rounded-full font-bold shadow-xl hover:bg-orange-50 transition-colors uppercase tracking-widest text-sm">
+        <button onclick="enterSite()"
+            class="bg-white text-blue-900 px-8 py-3 rounded-full font-bold shadow-xl hover:bg-orange-50 transition-colors uppercase tracking-widest text-sm">
             Otwórz stronę
         </button>
     </div>
 
+    <!-- Header -->
     <header class="gradient-header text-white p-6 shadow-lg relative">
-        <a href="/cdn-cgi/access/logout" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1 border border-white/20 px-2 py-1 rounded">
+        <!-- Przycisk Wylogowania (Cloudflare Zero Trust) -->
+        <a href="/cdn-cgi/access/logout"
+            class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1 border border-white/20 px-2 py-1 rounded">
             <i class="fas fa-sign-out-alt"></i> Wyloguj
         </a>
+
         <h1 class="serif text-3xl font-bold">Venezia 2026</h1>
         <p class="opacity-90 italic">Autentyczny Przewodnik Slow</p>
         <div class="mt-4 flex gap-4 text-sm overflow-x-auto whitespace-nowrap pb-2">
@@ -89,55 +140,118 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="p-4 max-w-2xl mx-auto">
-        
+
+        <!-- Tab: Harmonogram -->
         <section id="plan" class="tab-content active space-y-4">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">TOP 10 Atrakcji Wenecji</h2>
-            
+
             <div class="space-y-3">
-                <div class="card p-4 border-l-4 border-orange-500">
-                    <h3 class="font-bold">1. Bazylika św. Marka</h3>
-                    <p class="text-sm text-gray-600">Niezwykłe bizantyjskie mozaiki i złoty ołtarz Pala d’Oro. Symbol potęgi Republiki.</p>
+                <!-- 1 -->
+                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4">
+                    <img src="https://nawakacje.eu/wp-content/uploads/2022/04/Bazylika-sw.-Marka-w-Wenecji-%E2%80%93-architektura.jpg"
+                        alt="Bazylika św. Marka" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">1. Bazylika św. Marka</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Niezwykłe bizantyjskie mozaiki i złoty ołtarz
+                            Pala d’Oro. Symbol potęgi Republiki.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-orange-500">
-                    <h3 class="font-bold">2. Pałac Dożów (Palazzo Ducale)</h3>
-                    <p class="text-sm text-gray-600">Gotyckie arcydzieło, dawna siedziba władz i więzienie połączone Mostem Westchnień.</p>
+                <!-- 2 -->
+                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4">
+                    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweosJ9O-6kL4OMiSayTnPlGb0QbLQWXzQ4ySnsTPuyaA8rN31ooC0P8S12K7KHyAyd4VRZsmkjMoC8WxK4f6AMIMS672CeEFrJ2W7oLjzCcU2ST1qQgyGfdd1ynAkbmptnvr4vYJ=s680-w680-h510-rw"
+                        alt="Pałac Dożów" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">2. Pałac Dożów (Palazzo Ducale)</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Gotyckie arcydzieło, dawna siedziba władz i
+                            więzienie połączone Mostem Westchnień.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-blue-500">
-                    <h3 class="font-bold">3. Canal Grande</h3>
-                    <p class="text-sm text-gray-600">Główna "ulica" miasta. Najlepiej podziwiać ją z pokładu vaporetta linii nr 1.</p>
+                <!-- 3 -->
+                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7k4NJ6jI0Jfs_0WwToR7xM9Wv-UIth3yX7Q&s"
+                        alt="Canal Grande" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">3. Canal Grande</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Główna "ulica" miasta. Najlepiej podziwiać ją z
+                            pokładu vaporetta linii nr 1.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-blue-500">
-                    <h3 class="font-bold">4. Most Rialto</h3>
-                    <p class="text-sm text-gray-600">Najstarszy i najbardziej ikoniczny most na Kanale Grande, otoczony tętniącym życiem targiem.</p>
+                <!-- 4 -->
+                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBkWoeVl4md7RZCVPJHSLT5BvQQZEmOiGPfQ&s"
+                        alt="Most Rialto" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">4. Most Rialto</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Najstarszy i najbardziej ikoniczny most na Kanale
+                            Grande, otoczony tętniącym życiem targiem.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-green-500">
-                    <h3 class="font-bold">5. Wyspa Burano</h3>
-                    <p class="text-sm text-gray-600">Słynie z niezwykle kolorowych domów i tradycji wyrobu koronki. Raj dla fotografów.</p>
+                <!-- 5 -->
+                <div class="card p-4 border-l-4 border-green-500 flex items-center gap-4">
+                    <img src="https://duecappucci.pl/wp-content/uploads/2019/11/kolorowa-wyspa-burano6-min-1024x684.jpg"
+                        alt="Wyspa Burano" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">5. Wyspa Burano</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Słynie z niezwykle kolorowych domów i tradycji
+                            wyrobu koronki. Raj dla fotografów.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-purple-500">
-                    <h3 class="font-bold">6. Gallerie dell'Accademia</h3>
-                    <p class="text-sm text-gray-600">Najważniejsze muzeum sztuki weneckiej z dziełami Belliniego, Tycjana i Veronese.</p>
+                <!-- 6 -->
+                <div class="card p-4 border-l-4 border-purple-500 flex items-center gap-4">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4NZZG2wHMEPtoEwGrX_dBQKi4OmG4Bfik8g&s"
+                        alt="Gallerie dell'Accademia" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">6. Gallerie dell'Accademia</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Najważniejsze muzeum sztuki weneckiej z dziełami
+                            Belliniego, Tycjana i Veronese.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-red-500">
-                    <h3 class="font-bold">7. Bazylika Santa Maria della Salute</h3>
-                    <p class="text-sm text-gray-600">Barokowa świątynia wzniesiona w podzięce za ustąpienie zarazy, dominująca u ujścia Kanału Grande.</p>
+                <!-- 7 -->
+                <div class="card p-4 border-l-4 border-red-500 flex items-center gap-4">
+                    <img src="https://globtroterek.com/wp-content/uploads/2020/11/Wenecja-bazylika-santa-maria-4-800x600xc.jpg"
+                        alt="Santa Maria della Salute" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">7. Bazylika Santa Maria della Salute</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Barokowa świątynia wzniesiona w podzięce za
+                            zarazę, dominująca u ujścia kanału.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-gray-500">
-                    <h3 class="font-bold">8. Arsenał Wenecki</h3>
-                    <p class="text-sm text-gray-600">Historyczny kompleks stoczni i zbrojowni, serce dawnej morskiej potęgi Wenecji.</p>
+                <!-- 8 -->
+                <div class="card p-4 border-l-4 border-gray-500 flex items-center gap-4">
+                    <img src="https://aws-tiqets-cdn.imgix.net/images/content/b733b65e8d6f4d358ead11fdcc7a6ad3.jpg?auto=format%2Ccompress&fit=crop&q=70"
+                        alt="Arsenał Wenecki" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">8. Arsenał Wenecki</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Historyczny kompleks stoczni i zbrojowni, serce
+                            dawnej morskiej potęgi Wenecji.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-yellow-500">
-                    <h3 class="font-bold">9. Teatr La Fenice</h3>
-                    <p class="text-sm text-gray-600">Jedna z najsłynniejszych oper na świecie, znana z przepychu i burzliwej historii pożarów.</p>
+                <!-- 9 -->
+                <div class="card p-4 border-l-4 border-yellow-500 flex items-center gap-4">
+                    <img src="https://www.casavio.com/wp-content/uploads/2025/03/teatro-fenice-v.jpg"
+                        alt="Teatr La Fenice" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">9. Teatr La Fenice</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Jedna z najsłynniejszych oper świata, znana z
+                            przepychu i historii pożarów.</p>
+                    </div>
                 </div>
-                <div class="card p-4 border-l-4 border-pink-500">
-                    <h3 class="font-bold">10. Kolekcja Peggy Guggenheim</h3>
-                    <p class="text-sm text-gray-600">Sztuka nowoczesna (Picasso, Dalí, Pollock) w przepięknym pałacu nad wodą w Dorsoduro.</p>
+                <!-- 10 -->
+                <div class="card p-4 border-l-4 border-pink-500 flex items-center gap-4">
+                    <img src="https://cdn-imgix.headout.com/mircobrands-content/image/e5cf511789138ef722ec6fe8dc95fa56-1a.jpg"
+                        alt="Kolekcja Guggenheim" class="attraction-img">
+                    <div>
+                        <h3 class="font-bold">10. Kolekcja Peggy Guggenheim</h3>
+                        <p class="text-sm text-gray-600 leading-tight">Sztuka nowoczesna w przepięknym pałacu nad wodą w
+                            dzielnicy Dorsoduro.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Tab: Logistyka -->
         <section id="logistyka" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Informacje Logistyczne</h2>
             <div class="card p-5">
@@ -154,12 +268,16 @@
                         <p>11:30 Modlin</p>
                     </div>
                 </div>
+                <!-- Linki Ryanair -->
                 <div class="mt-4 pt-4 border-t border-gray-100 space-y-2">
-                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Ważne zasady przewoźnika:</p>
-                    <a href="https://help.ryanair.com/hc/pl/sections/12489178346129-Zasady-przewozu-baga%C5%BCu" target="_blank" class="flex items-center gap-2 text-xs text-blue-700 hover:underline">
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Ważne zasady przewoźnika:
+                    </p>
+                    <a href="https://help.ryanair.com/hc/pl/sections/12489178346129-Zasady-przewozu-baga%C5%BCu"
+                        target="_blank" class="flex items-center gap-2 text-xs text-blue-700 hover:underline">
                         <i class="fas fa-suitcase-rolling"></i> Rozmiar i zasady bagażu pokładowego
                     </a>
-                    <a href="https://help.ryanair.com/hc/pl/categories/12502999419409-Przedmioty-dozwolone-na-pok%C5%82adzie" target="_blank" class="flex items-center gap-2 text-xs text-blue-700 hover:underline">
+                    <a href="https://help.ryanair.com/hc/pl/categories/12502999419409-Przedmioty-dozwolone-na-pok%C5%82adzie"
+                        target="_blank" class="flex items-center gap-2 text-xs text-blue-700 hover:underline">
                         <i class="fas fa-shield-alt"></i> Co można wnieść (płyny, security)
                     </a>
                 </div>
@@ -181,55 +299,181 @@
                         <span>Całą noc co 30'</span>
                     </div>
                 </div>
+
+                <!-- Przycisk biletów online -->
                 <div class="mt-4 pt-4 border-t border-gray-100">
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-3">Kup bilety online</p>
                     <div class="grid grid-cols-2 gap-2">
-                        <a href="https://www.veneziaunica.it/en/e-commerce/services" target="_blank" class="bg-red-50 text-red-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-red-100 flex items-center justify-center gap-2">
+                        <a href="https://www.veneziaunica.it/en/e-commerce/services" target="_blank"
+                            class="bg-red-50 text-red-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-red-100 flex items-center justify-center gap-2">
                             <i class="fas fa-shopping-cart"></i> Venezia Unica
                         </a>
-                        <a href="https://actv.avmspa.it/en/content/avm-venezia-official-app" target="_blank" class="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-blue-100 flex items-center justify-center gap-2">
+                        <a href="https://actv.avmspa.it/en/content/avm-venezia-official-app" target="_blank"
+                            class="bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-xs font-bold text-center border border-blue-100 flex items-center justify-center gap-2">
                             <i class="fas fa-mobile-alt"></i> App AVM
                         </a>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-sm">
+                <p class="font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Wielkanoc (5-6.04):</p>
+                <p>Rozkład świąteczny ACTV. Kup bilet wielodniowy, aby oszczędzić. <strong>Pamiętaj o walidacji
+                        biletów!</strong></p>
+            </div>
         </section>
 
+        <!-- Tab: Menu -->
         <section id="kuchnia" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Smaki Wenecji</h2>
+
+            <!-- Tradycyjne Dania Główne -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
                     <div class="text-3xl">🐟</div>
-                    <div><h4 class="font-bold">Sarde in saor</h4><p class="text-xs text-gray-600">Sardynki w marynacie.</p></div>
-                </div>
-                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
-                    <div class="text-3xl">🍝</div>
-                    <div><h4 class="font-bold">Bigoli in salsa</h4><p class="text-xs text-gray-600">Makaron z sardelami.</p></div>
-                </div>
-                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
-                    <div class="text-3xl">🍕</div>
-                    <div><h4 class="font-bold">Pizza „Al Taglio”</h4><p class="text-xs text-gray-600">Pizza na kawałki.</p></div>
+                    <div>
+                        <h4 class="font-bold">Sarde in saor</h4>
+                        <p class="text-xs text-gray-600">Sardynki w słodko-kwaśnej marynacie z cebulą i rodzynkami.</p>
+                    </div>
                 </div>
                 <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
                     <div class="text-3xl">🧆</div>
-                    <div><h4 class="font-bold">Baccalà mantecato</h4><p class="text-xs text-gray-600">Mus z dorsza.</p></div>
+                    <div>
+                        <h4 class="font-bold">Baccalà mantecato</h4>
+                        <p class="text-xs text-gray-600">Kremowy mus z dorsza podawany na chrupiącej polencie.</p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
+                    <div class="text-3xl">🥯</div>
+                    <div>
+                        <h4 class="font-bold">Fritole Veneziane</h4>
+                        <p class="text-xs text-gray-600">Słodkie pączki z orzeszkami pinii i rodzynkami (tradycja!).</p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-orange-200">
+                    <div class="text-3xl">🍚</div>
+                    <div>
+                        <h4 class="font-bold">Risi e Bisi</h4>
+                        <p class="text-xs text-gray-600">Gęsta zupa/risotto z ryżem i młodym groszkiem (danie królów).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nowa sekcja: Pasty i Pizze -->
+            <h3 class="serif text-xl font-bold mt-6 mb-2 text-red-800">Pasta & Pizza</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🍝</div>
+                    <div>
+                        <h4 class="font-bold">Bigoli in salsa</h4>
+                        <p class="text-xs text-gray-600">Gruby wenecki makaron w sosie z cebuli i solonych sardeli.</p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🦑</div>
+                    <div>
+                        <h4 class="font-bold">Spaghetti al nero</h4>
+                        <p class="text-xs text-gray-600">Makaron z mątwą i jej atramentem. Głęboki, morski smak.</p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🍕</div>
+                    <div>
+                        <h4 class="font-bold">Pizza „Al Taglio”</h4>
+                        <p class="text-xs text-gray-600">W Wenecji szukaj pizzy na kawałki w małych piekarniach (forno).
+                        </p>
+                    </div>
+                </div>
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-red-200">
+                    <div class="text-3xl">🥟</div>
+                    <div>
+                        <h4 class="font-bold">Gnocchi di Pasqua</h4>
+                        <p class="text-xs text-gray-600">Lokalna wariacja gnocchi, często serwowana w okresie
+                            świątecznym.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pozostałe klasyki -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="card p-4 flex items-center gap-4 border-l-2 border-gray-100">
+                    <div class="text-3xl">🥘</div>
+                    <div>
+                        <h4 class="font-bold">Fegato alla Veneziana</h4>
+                        <p class="text-xs text-gray-600">Wątróbka cielęca duszona z dużą ilością cebuli.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Tab: Pomocnik -->
         <section id="pomocnik" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Pomoc & Mapy</h2>
+
+            <div class="card p-5">
+                <h3 class="font-bold mb-3 text-orange-800"><i class="fas fa-language mr-2"></i>Słowniczek Codzienny</h3>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <div class="border-b border-gray-100 pb-1">Dzień dobry</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Buongiorno</div>
+                    <div class="border-b border-gray-100 pb-1">Dobry wieczór</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Buonasera</div>
+                    <div class="border-b border-gray-100 pb-1">Dziękuję</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Grazie</div>
+                    <div class="border-b border-gray-100 pb-1">Do widzenia</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Arrivederci</div>
+                    <div class="border-b border-gray-100 pb-1">Przepraszam</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Mi scusi / Scusa</div>
+                    <div class="border-b border-gray-100 pb-1">Proszę (podać coś)</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Prego</div>
+                    <div class="border-b border-gray-100 pb-1">Ile kosztuje?</div>
+                    <div class="border-b border-gray-100 pb-1 italic font-semibold">Quanto costa?</div>
+                    <div>Rachunek, proszę</div>
+                    <div class="italic font-semibold">Il conto, per favore</div>
+                </div>
+            </div>
+
+            <!-- Nowa sekcja: Nocleg i Kontakt -->
             <div class="card p-5 border-l-4 border-blue-900">
-                <h3 class="font-bold mb-3 text-blue-900"><i class="fas fa-home mr-2"></i>Nocleg</h3>
-                <p class="text-sm">Hapton house Trento 19.1, Mestre</p>
+                <h3 class="font-bold mb-3 text-blue-900"><i class="fas fa-home mr-2"></i>Nocleg i Kontakt</h3>
+                <div class="text-sm space-y-2">
+                    <p class="font-bold">Hapton house Trento 19.1</p>
+                    <p class="text-gray-600"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i>Via Trento, 19,
+                        Mestre</p>
+                    <p class="text-gray-600"><i class="fas fa-phone mr-2 text-green-600"></i><a
+                            href="tel:+39042406676">+39 0424 06676</a></p>
+                </div>
+            </div>
+
+            <!-- Interaktywna Mapa -->
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Trento+19+Venice+Italy" target="_blank"
+                class="block transition-transform active:scale-95">
+                <div
+                    class="bg-blue-900 text-white p-6 rounded-xl text-center shadow-lg hover:bg-blue-800 transition-colors">
+                    <i class="fas fa-map-marked-alt text-4xl mb-3"></i>
+                    <h3 class="font-bold text-xl mb-2">Pamiętaj!</h3>
+                    <p class="text-sm opacity-80 italic mb-4">"Zgubienie się w Wenecji to jedyny sposób, by naprawdę ją
+                        zobaczyć."</p>
+                    <div
+                        class="bg-white/10 py-2 px-4 rounded-full inline-flex items-center gap-2 border border-white/20 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fas fa-external-link-alt text-xs"></i>
+                        Kliknij, aby otworzyć mapę
+                    </div>
+                </div>
+            </a>
+
+            <div class="text-center p-4">
+                <p class="text-xs text-gray-400">Numer alarmowy we Włoszech: <strong>112</strong></p>
             </div>
         </section>
 
     </main>
 
+    <!-- Navigation -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-3 px-2 z-50">
         <button onclick="showTab('plan', this)" class="nav-active flex flex-col items-center gap-1 transition-colors">
-            <i class="fas fa-star text-xl"></i>
-            <span class="text-[10px] uppercase font-bold">Atrakcje</span>
+            <i class="fas fa-calendar-alt text-xl"></i>
+            <span class="text-[10px] uppercase font-bold">Plan</span>
         </button>
         <button onclick="showTab('logistyka', this)" class="flex flex-col items-center gap-1 text-gray-400">
             <i class="fas fa-info-circle text-xl"></i>
@@ -246,29 +490,44 @@
     </nav>
 
     <script>
+        // TARGET DATE: 3.04.2026, 13:10
         const targetDate = new Date("April 3, 2026 13:10:00").getTime();
+
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-            if (distance < 0) { document.getElementById("countdown").innerHTML = "PRZYGODA ROZPOCZĘTA!"; return; }
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "PRZYGODA ROZPOCZĘTA!";
+                return;
+            }
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            document.getElementById("countdown").innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
-        setInterval(updateCountdown, 1000);
+
+        // Run countdown every second
+        const countdownTimer = setInterval(updateCountdown, 1000);
         updateCountdown();
 
         function enterSite() {
             const loader = document.getElementById('loader');
             loader.classList.add('loader-hidden');
-            document.body.style.overflow = 'auto';
-            setTimeout(() => { loader.style.display = 'none'; }, 600);
+            document.body.style.overflow = 'auto'; // Przywrócenie skrolowania
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 600);
         }
 
         function showTab(tabId, el) {
-            document.querySelectorAll('.tab-content').forEach(tab => { tab.classList.remove('active'); });
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
             document.getElementById(tabId).classList.add('active');
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.classList.remove('nav-active');
@@ -276,8 +535,9 @@
             });
             el.classList.add('nav-active');
             el.classList.remove('text-gray-400');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
+
 </html>
