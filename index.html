@@ -40,6 +40,12 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.98);
         }
 
         .gradient-header {
@@ -104,14 +110,75 @@
             flex-shrink: 0;
             border: 2px solid #f3f4f6;
         }
+
+        /* Modal Styles */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        #modal-content {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .recommended-day {
+            /* font-family: 'Playfair Display', serif; */
+            font-style: italic;
+            font-size: .8rem !important;
+            color: #c2410c;
+            color: rgba(153, 45, 9, 0.9)
+        }
     </style>
 </head>
 
 <body class="pb-20">
 
+    <!-- MODAL ATRAKCJI -->
+    <div id="modal-overlay" onclick="closeModal()">
+        <div id="modal-content" onclick="event.stopPropagation()" class="shadow-2xl">
+            <img id="modal-img" src="" alt="" class="w-full h-48 object-cover">
+            <div class="p-6">
+                <h3 id="modal-title" class="serif text-2xl font-bold mb-3 text-blue-900"></h3>
+                <p id="modal-desc" class="text-gray-700 leading-relaxed mb-6"></p>
+                <div class="bg-orange-50 p-1 rounded-xl border border-orange-100">
+                    <p class="text-xs uppercase tracking-widest text-orange-800 font-bold mb-1">Kiedy najlepiej
+                        odwiedzić?</p>
+                    <p id="modal-day" class="recommended-day text-lg"></p>
+                </div>
+                <button onclick="closeModal()"
+                    class="mt-6 w-full py-3 bg-gray-100 rounded-xl font-bold text-gray-600 hover:bg-gray-200 transition-colors">Zamknij</button>
+            </div>
+        </div>
+    </div>
+
     <!-- LOADER / COUNTDOWN -->
     <div id="loader">
-        <div class="mb-8 text-center px-4">
+        <div id="countdown-container" class="mb-8 text-center px-4">
             <i class="fas fa-plane-departure text-5xl mb-6 pulse-plane"></i>
             <h2 class="serif text-2xl font-bold mb-2">Do wylotu pozostało:</h2>
             <div id="countdown" class="countdown-box text-xl font-mono tracking-wider">
@@ -126,7 +193,6 @@
 
     <!-- Header -->
     <header class="gradient-header text-white p-6 shadow-lg relative">
-        <!-- Przycisk Wylogowania (Cloudflare Zero Trust) -->
         <a href="/cdn-cgi/access/logout"
             class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors text-xs flex items-center gap-1 border border-white/20 px-2 py-1 rounded">
             <i class="fas fa-sign-out-alt"></i> Wyloguj
@@ -143,115 +209,112 @@
     <!-- Main Content -->
     <main class="p-4 max-w-2xl mx-auto">
 
-        <!-- Tab: Harmonogram -->
+        <!-- Tab: Atrakcje -->
         <section id="plan" class="tab-content active space-y-4">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">TOP 10 Atrakcji Wenecji</h2>
 
             <div class="space-y-3">
                 <!-- 1 -->
-                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4" onclick="openModal(1)">
                     <img src="https://nawakacje.eu/wp-content/uploads/2022/04/Bazylika-sw.-Marka-w-Wenecji-%E2%80%93-architektura.jpg"
                         alt="Bazylika św. Marka" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">1. Bazylika św. Marka</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Niezwykłe bizantyjskie mozaiki i złoty ołtarz
-                            Pala d’Oro. Symbol potęgi Republiki.</p>
+                        <h3 class="font-bold text-sm">1. Bazylika św. Marka</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Niezwykłe mozaiki i złoty ołtarz Pala d’Oro.
+                            Kliknij po szczegóły.</p>
                     </div>
                 </div>
                 <!-- 2 -->
-                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-orange-500 flex items-center gap-4" onclick="openModal(2)">
                     <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweosJ9O-6kL4OMiSayTnPlGb0QbLQWXzQ4ySnsTPuyaA8rN31ooC0P8S12K7KHyAyd4VRZsmkjMoC8WxK4f6AMIMS672CeEFrJ2W7oLjzCcU2ST1qQgyGfdd1ynAkbmptnvr4vYJ=s680-w680-h510-rw"
                         alt="Pałac Dożów" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">2. Pałac Dożów (Palazzo Ducale)</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Gotyckie arcydzieło, dawna siedziba władz i
-                            więzienie połączone Mostem Westchnień.</p>
+                        <h3 class="font-bold text-sm">2. Pałac Dożów (Palazzo Ducale)</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Siedziba władz i słynny Most Westchnień.</p>
                     </div>
                 </div>
                 <!-- 3 -->
-                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4" onclick="openModal(3)">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7k4NJ6jI0Jfs_0WwToR7xM9Wv-UIth3yX7Q&s"
                         alt="Canal Grande" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">3. Canal Grande</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Główna "ulica" miasta. Najlepiej podziwiać ją z
-                            pokładu vaporetta linii nr 1.</p>
+                        <h3 class="font-bold text-sm">3. Canal Grande</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Główna arteria wodna miasta podziwiana z
+                            vaporetta.</p>
                     </div>
                 </div>
                 <!-- 4 -->
-                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-blue-500 flex items-center gap-4" onclick="openModal(4)">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBkWoeVl4md7RZCVPJHSLT5BvQQZEmOiGPfQ&s"
                         alt="Most Rialto" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">4. Most Rialto</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Najstarszy i najbardziej ikoniczny most na Kanale
-                            Grande, otoczony tętniącym życiem targiem.</p>
+                        <h3 class="font-bold text-sm">4. Most Rialto</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Najstarszy most na kanale i tętniący życiem
+                            targ rybny.</p>
                     </div>
                 </div>
                 <!-- 5 -->
-                <div class="card p-4 border-l-4 border-green-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-green-500 flex items-center gap-4" onclick="openModal(5)">
                     <img src="https://duecappucci.pl/wp-content/uploads/2019/11/kolorowa-wyspa-burano6-min-1024x684.jpg"
                         alt="Wyspa Burano" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">5. Wyspa Burano</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Słynie z niezwykle kolorowych domów i tradycji
-                            wyrobu koronki. Raj dla fotografów.</p>
+                        <h3 class="font-bold text-sm">5. Wyspa Burano</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Tęcza kolorowych domów i tradycja weneckiej
+                            koronki.</p>
                     </div>
                 </div>
                 <!-- 6 -->
-                <div class="card p-4 border-l-4 border-purple-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-purple-500 flex items-center gap-4" onclick="openModal(6)">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4NZZG2wHMEPtoEwGrX_dBQKi4OmG4Bfik8g&s"
                         alt="Gallerie dell'Accademia" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">6. Gallerie dell'Accademia</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Najważniejsze muzeum sztuki weneckiej z dziełami
-                            Belliniego, Tycjana i Veronese.</p>
+                        <h3 class="font-bold text-sm">6. Gallerie dell'Accademia</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Skarbnica malarstwa weneckiego: Tycjan i
+                            Veronese.</p>
                     </div>
                 </div>
                 <!-- 7 -->
-                <div class="card p-4 border-l-4 border-red-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-red-500 flex items-center gap-4" onclick="openModal(7)">
                     <img src="https://globtroterek.com/wp-content/uploads/2020/11/Wenecja-bazylika-santa-maria-4-800x600xc.jpg"
                         alt="Santa Maria della Salute" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">7. Bazylika Santa Maria della Salute</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Barokowa świątynia wzniesiona w podzięce za
-                            zarazę, dominująca u ujścia kanału.</p>
+                        <h3 class="font-bold text-sm">7. Santa Maria della Salute</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Barokowe wotum dziękczynne za koniec zarazy.
+                        </p>
                     </div>
                 </div>
                 <!-- 8 -->
-                <div class="card p-4 border-l-4 border-gray-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-gray-500 flex items-center gap-4" onclick="openModal(8)">
                     <img src="https://aws-tiqets-cdn.imgix.net/images/content/b733b65e8d6f4d358ead11fdcc7a6ad3.jpg?auto=format%2Ccompress&fit=crop&q=70"
                         alt="Arsenał Wenecki" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">8. Arsenał Wenecki</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Historyczny kompleks stoczni i zbrojowni, serce
-                            dawnej morskiej potęgi Wenecji.</p>
+                        <h3 class="font-bold text-sm">8. Arsenał Wenecki</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Potężna stocznia, która zdominowała Adriatyk.
+                        </p>
                     </div>
                 </div>
                 <!-- 9 -->
-                <div class="card p-4 border-l-4 border-yellow-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-yellow-500 flex items-center gap-4" onclick="openModal(9)">
                     <img src="https://www.casavio.com/wp-content/uploads/2025/03/teatro-fenice-v.jpg"
                         alt="Teatr La Fenice" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">9. Teatr La Fenice</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Jedna z najsłynniejszych oper świata, znana z
-                            przepychu i historii pożarów.</p>
+                        <h3 class="font-bold text-sm">9. Teatr La Fenice</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Legendarna opera odrodzona z popiołów.</p>
                     </div>
                 </div>
                 <!-- 10 -->
-                <div class="card p-4 border-l-4 border-pink-500 flex items-center gap-4">
+                <div class="card p-4 border-l-4 border-pink-500 flex items-center gap-4" onclick="openModal(10)">
                     <img src="https://cdn-imgix.headout.com/mircobrands-content/image/e5cf511789138ef722ec6fe8dc95fa56-1a.jpg"
                         alt="Kolekcja Guggenheim" class="attraction-img">
                     <div>
-                        <h3 class="font-bold">10. Kolekcja Peggy Guggenheim</h3>
-                        <p class="text-sm text-gray-600 leading-tight">Sztuka nowoczesna w przepięknym pałacu nad wodą w
-                            dzielnicy Dorsoduro.</p>
+                        <h3 class="font-bold text-sm">10. Kolekcja Peggy Guggenheim</h3>
+                        <p class="text-[11px] text-gray-600 leading-tight">Nowoczesna sztuka w sercu historycznego
+                            Dorsoduro.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Tab: Logistyka -->
         <section id="logistyka" class="tab-content space-y-6">
             <h2 class="serif text-2xl font-bold mb-4 border-b pb-2">Informacje Logistyczne</h2>
             <div class="card p-5">
@@ -446,8 +509,8 @@
             </div>
 
             <!-- Interaktywna Mapa -->
-            <a href="https://www.google.com/maps/search/?api=1&query=Via+Trento+19+Venice+Italy" target="_blank"
-                class="block transition-transform active:scale-95">
+            <a href="https://www.google.com/maps/@45.4529787,12.263386,12344m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI2MDMyOS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank" class="block transition-transform active:scale-95">
                 <div
                     class="bg-blue-900 text-white p-6 rounded-xl text-center shadow-lg hover:bg-blue-800 transition-colors">
                     <i class="fas fa-map-marked-alt text-4xl mb-3"></i>
@@ -490,44 +553,115 @@
     </nav>
 
     <script>
-        // TARGET DATE: 3.04.2026, 13:10
-        const targetDate = new Date("April 3, 2026 13:10:00").getTime();
+        // Dane atrakcji
+        const attractionsData = {
+            1: {
+                title: "Bazylika św. Marka",
+                img: "https://nawakacje.eu/wp-content/uploads/2022/04/Bazylika-sw.-Marka-w-Wenecji-%E2%80%93-architektura.jpg",
+                desc: "Złota bazylika to arcydzieło architektury bizantyjskiej. Wewnątrz zobaczysz ponad 8000 m2 mozaik oraz niesamowity ołtarz Pala d’Oro wykonany ze złota i szlachetnych kamieni. Pamiętaj o darmowej rezerwacji wejścia online!",
+                day: "Poniedziałek (Lany Poniedziałek) - Spacer po San Marco"
+            },
+            2: {
+                title: "Pałac Dożów",
+                img: "https://lh3.googleusercontent.com/gps-cs-s/AHVAweosJ9O-6kL4OMiSayTnPlGb0QbLQWXzQ4ySnsTPuyaA8rN31ooC0P8S12K7KHyAyd4VRZsmkjMoC8WxK4f6AMIMS672CeEFrJ2W7oLjzCcU2ST1qQgyGfdd1ynAkbmptnvr4vYJ=s680-w680-h510-rw",
+                desc: "Symbol potęgi Republiki Weneckiej. Odwiedź sale balowe, apartamenty dożów i przejdź przez Most Westchnień do dawnego więzienia. Sugerujemy wycieczkę 'Secret Itineraries'.",
+                day: "Poniedziałek - Klasyka Wenecji"
+            },
+            3: {
+                title: "Canal Grande",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7k4NJ6jI0Jfs_0WwToR7xM9Wv-UIth3yX7Q&s",
+                desc: "Najpiękniejsza 'ulica' świata. Najlepszy sposób na zwiedzanie to rejs vaporettem linii 1 lub 2 tuż przed zachodem słońca, gdy pałace nad wodą zaczynają lśnić.",
+                day: "Piątek - Powitalny rejs po przylocie"
+            },
+            4: {
+                title: "Most Rialto",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBkWoeVl4md7RZCVPJHSLT5BvQQZEmOiGPfQ&s",
+                desc: "Kamienny most o unikalnej konstrukcji z XVI wieku. Warto zajrzeć na pobliski targ rybny i warzywny Mercato di Rialto (czynny rano) oraz na taras widokowy Fondaco dei Tedeschi.",
+                day: "Sobota rano - Przed spacerem po Cannaregio"
+            },
+            5: {
+                title: "Wyspa Burano",
+                img: "https://duecappucci.pl/wp-content/uploads/2019/11/kolorowa-wyspa-burano6-min-1024x684.jpg",
+                desc: "Miejscowość słynąca z jaskrawych kolorów domów, które kiedyś pomagały rybakom trafić do portu w gęstej mgle. To tutaj kupisz najpiękniejsze koronki.",
+                day: "Wtorek - Dzień na wyspach Laguny"
+            },
+            6: {
+                title: "Gallerie dell'Accademia",
+                img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4NZZG2wHMEPtoEwGrX_dBQKi4OmG4Bfik8g&s",
+                desc: "Najważniejsze muzeum weneckiego malarstwa. Zobaczysz tu dzieła od XIV do XVIII wieku, w tym słynnego 'Człowieka witruwiańskiego' Leonarda da Vinci (wystawiany okresowo).",
+                day: "Poniedziałek - Artystyczne Dorsoduro"
+            },
+            7: {
+                title: "Santa Maria della Salute",
+                img: "https://globtroterek.com/wp-content/uploads/2020/11/Wenecja-bazylika-santa-maria-4-800x600xc.jpg",
+                desc: "Ośmioboczna bazylika z ogromną kopułą, jedna z najbardziej fotogenicznych budowli w mieście. Wewnątrz znajdują się wybitne dzieła Tycjana.",
+                day: "Poniedziałek po południu - Zachód słońca przy Punto della Dogana"
+            },
+            8: {
+                title: "Arsenał Wenecki",
+                img: "https://aws-tiqets-cdn.imgix.net/images/content/b733b65e8d6f4d358ead11fdcc7a6ad3.jpg?auto=format%2Ccompress&fit=crop&q=70",
+                desc: "Historyczny kompleks stoczniowy. Chociaż teren jest częściowo zamknięty dla turystów, sama brama Porta Magna z lwami i wieżami robi ogromne wrażenie.",
+                day: "Niedziela Wielkanocna - Spacer po spokojnym Castello"
+            },
+            9: {
+                title: "Teatr La Fenice",
+                img: "https://www.casavio.com/wp-content/uploads/2025/03/teatro-fenice-v.jpg",
+                desc: "Jeden z najsłynniejszych teatrów operowych na świecie. Nazwa 'Feniks' idealnie oddaje jego historię – teatr trzykrotnie spłonął i za każdym razem został odbudowany.",
+                day: "Sobota wieczór - Kulturalny finisz dnia"
+            },
+            10: {
+                title: "Kolekcja Peggy Guggenheim",
+                img: "https://cdn-imgix.headout.com/mircobrands-content/image/e5cf511789138ef722ec6fe8dc95fa56-1a.jpg",
+                desc: "Zlokalizowana w Palazzo Venier dei Leoni, niedokończonym pałacu nad Canal Grande. Najważniejsza kolekcja sztuki nowoczesnej we Włoszech, z ogrodem rzeźb.",
+                day: "Poniedziałek - Spacer wzdłuż kanałów Dorsoduro"
+            }
+        };
 
+        // Funkcje Modala
+        function openModal(id) {
+            const data = attractionsData[id];
+            document.getElementById('modal-img').src = data.img;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-day').innerText = data.day;
+            document.getElementById('modal-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Zablokuj skrolowanie tła
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Countdown Logic
+        const targetDate = new Date("April 3, 2026 13:10:00").getTime();
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
-
             if (distance < 0) {
+                const container = document.getElementById("countdown-container");
+                if (container) container.style.display = "none";
                 document.getElementById("countdown").innerHTML = "PRZYGODA ROZPOCZĘTA!";
                 return;
             }
-
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("countdown").innerHTML =
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById("countdown").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
-
-        // Run countdown every second
-        const countdownTimer = setInterval(updateCountdown, 1000);
+        setInterval(updateCountdown, 1000);
         updateCountdown();
 
         function enterSite() {
             const loader = document.getElementById('loader');
             loader.classList.add('loader-hidden');
-            document.body.style.overflow = 'auto'; // Przywrócenie skrolowania
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 600);
+            document.body.style.overflow = 'auto';
+            setTimeout(() => { loader.style.display = 'none'; }, 600);
         }
 
         function showTab(tabId, el) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.classList.remove('nav-active');
